@@ -1,9 +1,9 @@
 BUILDDIR ?= _build
 .PHONY: all clean install
 $(BUILDDIR)/%: $(BUILDDIR)/%.o
-	$(CC) -Wl,-z,relro,-z,now,-z,noexecstack -fPIC -o $@ $^
+	$(CC) -Wl,-z,relro,-z,now,-z,noexecstack -fPIC -o $@ $^ -pthread
 $(BUILDDIR)/%.o: %.c Makefile | $(BUILDDIR)/
-	$(CC) $(CFLAGS) -O2 -ggdb -MD -MP -MF $@.dep -c -o $@ $< \
+	$(CC) $(CFLAGS) -O2 -ggdb -MD -MP -MF $@.dep -pthread -c -o $@ $< \
 		-Wp,-D_FORTIFY_SOURCE=2 \
 		-Wp,-D_GNU_SOURCE \
 		-fPIC \
